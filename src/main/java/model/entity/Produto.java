@@ -10,22 +10,22 @@ public class Produto {
 	private String marca;
 	private double preco_compra;
 	private double preco_venda;
-	private double peso;
+	private String unidade_medida;
 	private LocalDate data_vencimento;
 	private LocalDateTime data_fabricacao;
 	private int quantidade;
-	private int lote;
+	private String lote;
 	private Categoria categoria;
 
-	public Produto(int idProduto, String descricao, String marca, double preco_compra, double preco_venda, double peso,
-			LocalDate data_vencimento, LocalDateTime data_fabricacao, int quantidade, int lote, Categoria categoria) {
+	public Produto(int idProduto, String descricao, String marca, double preco_compra, double preco_venda, String unidade_medida,
+			LocalDate data_vencimento, LocalDateTime data_fabricacao, int quantidade, String lote, Categoria categoria) {
 		super();
 		this.idProduto = idProduto;
 		this.descricao = descricao;
 		this.marca = marca;
 		this.preco_compra = preco_compra;
 		this.preco_venda = preco_venda;
-		this.peso = peso;
+		this.unidade_medida = unidade_medida;
 		this.data_vencimento = data_vencimento;
 		this.data_fabricacao = data_fabricacao;
 		this.quantidade = quantidade;
@@ -78,12 +78,12 @@ public class Produto {
 		this.preco_venda = preco_venda;
 	}
 
-	public double getPeso() {
-		return peso;
+	public String getUnidade_medida() {
+		return unidade_medida;
 	}
 
-	public void setPeso(double peso) {
-		this.peso = peso;
+	public void setUnidade_medida(String unidade_medida) {
+		this.unidade_medida = unidade_medida;
 	}
 
 	public LocalDate getData_vencimento() {
@@ -110,11 +110,11 @@ public class Produto {
 		this.quantidade = quantidade;
 	}
 
-	public int getLote() {
+	public String getLote() {
 		return lote;
 	}
 
-	public void setLote(int lote) {
+	public void setLote(String lote) {
 		this.lote = lote;
 	}
 

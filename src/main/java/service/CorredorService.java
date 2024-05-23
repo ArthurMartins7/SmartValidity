@@ -14,5 +14,11 @@ public class CorredorService {
 		return corredorRepository.consultarTodos();
 
 	}
+	
+	public Corredor consultarPorId(int id) {
+		
+		return corredorRepository.consultarPorId(id);
+		
+	}
 
 }
