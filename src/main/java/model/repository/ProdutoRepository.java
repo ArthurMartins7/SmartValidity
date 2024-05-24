@@ -9,6 +9,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
+import model.entity.Fornecedor;
 import model.entity.Produto;
 
 public class ProdutoRepository implements BaseRepository<Produto>{
@@ -40,13 +41,7 @@ public class ProdutoRepository implements BaseRepository<Produto>{
 		String consulta = "SELECT idProduto, "
 				+ "descricao, "
 				+ "marca, "
-				+ "preco_compra, "
-				+ "preco_venda, "
 				+ "unidade_medida, "
-				+ "data_vencimento, "
-				+ "data_fabricacao, "
-				+ "quantidade, "
-				+ "lote, "
 				+ "idCategoria "
 				+ "FROM Produto "
 				+ "WHERE idProduto = " + id+";";
@@ -57,26 +52,11 @@ public class ProdutoRepository implements BaseRepository<Produto>{
 				produto.setIdProduto(resultado.getInt("idProduto"));
 				produto.setDescricao(resultado.getString("descricao"));
 				produto.setMarca(resultado.getString("marca"));
-				produto.setPreco_compra(resultado.getDouble("preco_compra"));
-				produto.setPreco_venda(resultado.getDouble("preco_venda"));
-				produto.setUnidade_medida(resultado.getString("unidade_medida"));
-				produto.setData_vencimento(resultado.getDate("data_vencimento").toLocalDate());
-				
-				//Obter o Timestamp do ResultSet
-				Timestamp timestamp = resultado.getTimestamp("data_fabricacao");
-				
-				if(timestamp != null) {
-				//Convertendo o Timestamp para LocalDateTime
-				LocalDateTime dataFabricacao = timestamp.toLocalDateTime();
-				
-				//Atribuindo a dataFabricacao convertida ao produto
-				produto.setData_fabricacao(dataFabricacao);
-				}
-				
-				produto.setQuantidade(resultado.getInt("quantidade"));
-				produto.setLote(resultado.getString("lote"));
+				produto.setUnidadeMedida(resultado.getString("unidade_medida"));
 				CategoriaRepository categoriaRepository = new CategoriaRepository();
 				produto.setCategoria(categoriaRepository.consultarPorId(resultado.getInt("idCategoria")));
+				FornecedorRepository fornecedorRepository = new FornecedorRepository();
+				produto.setFornecedores(fornecedorRepository.consultarFornecedoresPorIdProduto(resultado.getInt("idProduto")));
 			}
 		} catch (SQLException e) {
 			System.out.println("Erro ao tentar consultar produto pelo id!");
@@ -99,13 +79,7 @@ public class ProdutoRepository implements BaseRepository<Produto>{
 		String consulta = "SELECT idProduto, "
 				+ "descricao, "
 				+ "marca, "
-				+ "preco_compra, "
-				+ "preco_venda, "
 				+ "unidade_medida, "
-				+ "data_vencimento, "
-				+ "data_fabricacao, "
-				+ "quantidade, "
-				+ "lote, "
 				+ "idCategoria "
 				+ "FROM Produto;";
 		
@@ -116,20 +90,11 @@ public class ProdutoRepository implements BaseRepository<Produto>{
 				produto.setIdProduto(resultado.getInt("idProduto"));
 				produto.setDescricao(resultado.getString("descricao"));
 				produto.setMarca(resultado.getString("marca"));
-				produto.setPreco_compra(resultado.getDouble("preco_compra"));
-				produto.setPreco_venda(resultado.getDouble("preco_venda"));
-				produto.setUnidade_medida(resultado.getString("unidade_medida"));
-				produto.setData_vencimento(resultado.getDate("data_vencimento").toLocalDate());
-				
-				Timestamp timestamp = resultado.getTimestamp("data_fabricacao");
-				LocalDateTime dataFabricacao = timestamp.toLocalDateTime();
-				produto.setData_fabricacao(dataFabricacao);
-				
-				produto.setQuantidade(resultado.getInt("quantidade"));
-				produto.setLote(resultado.getString("lote"));
-				
+				produto.setUnidadeMedida(resultado.getString("unidade_medida"));
 				CategoriaRepository categoriaRepository = new CategoriaRepository();
 				produto.setCategoria(categoriaRepository.consultarPorId(resultado.getInt("idCategoria")));
+				FornecedorRepository fornecedorRepository = new FornecedorRepository();
+				produto.setFornecedores(fornecedorRepository.consultarFornecedoresPorIdProduto(resultado.getInt("idProduto")));
 				produtos.add(produto);
 			}
 		} catch (SQLException e) {
