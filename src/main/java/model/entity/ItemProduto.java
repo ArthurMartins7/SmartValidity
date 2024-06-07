@@ -6,7 +6,6 @@ import java.time.LocalDateTime;
 public class ItemProduto {
 
 	private int idItemProduto;
-	private int quantidade;
 	private String lote;
 	private double precoCompra;
 	private double precoVenda;
@@ -15,11 +14,10 @@ public class ItemProduto {
 	private LocalDate dataVencimento;
 	private Produto produto;
 
-	public ItemProduto(int idItemProduto, int quantidade, String lote, double precoCompra, double precoVenda,
+	public ItemProduto(int idItemProduto, String lote, double precoCompra, double precoVenda,
 			LocalDateTime dataFabricacao, LocalDateTime dataRecebimento, LocalDate dataVencimento, Produto produto) {
 		super();
 		this.idItemProduto = idItemProduto;
-		this.quantidade = quantidade;
 		this.lote = lote;
 		this.precoCompra = precoCompra;
 		this.precoVenda = precoVenda;
@@ -40,14 +38,6 @@ public class ItemProduto {
 
 	public void setIdItemProduto(int idItemProduto) {
 		this.idItemProduto = idItemProduto;
-	}
-
-	public int getQuantidade() {
-		return quantidade;
-	}
-
-	public void setQuantidade(int quantidade) {
-		this.quantidade = quantidade;
 	}
 
 	public String getLote() {

@@ -3,6 +3,7 @@ package model.entity;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.List;
 
 public class Produto {
 
@@ -10,18 +11,25 @@ public class Produto {
 	private String descricao;
 	private String marca;
 	private String unidadeMedida;
+	private int quantidade;
+	private String codigoBarras;
 	private Categoria categoria;
 	private ArrayList<Fornecedor> fornecedores;
+	private List<ItemProduto> itemProdutos;
 
-	public Produto(int idProduto, String descricao, String marca, String unidadeMedida, Categoria categoria,
-			ArrayList<Fornecedor> fornecedores) {
+	public Produto(int idProduto, String descricao, String marca, String unidadeMedida, int quantidade,
+			String codigoBarras, Categoria categoria, ArrayList<Fornecedor> fornecedores,
+			List<ItemProduto> itemProdutos) {
 		super();
 		this.idProduto = idProduto;
 		this.descricao = descricao;
 		this.marca = marca;
 		this.unidadeMedida = unidadeMedida;
+		this.quantidade = quantidade;
+		this.codigoBarras = codigoBarras;
 		this.categoria = categoria;
 		this.fornecedores = fornecedores;
+		this.itemProdutos = itemProdutos;
 	}
 
 	public Produto() {
@@ -75,6 +83,30 @@ public class Produto {
 
 	public void setFornecedores(ArrayList<Fornecedor> fornecedores) {
 		this.fornecedores = fornecedores;
+	}
+
+	public int getQuantidade() {
+		return quantidade;
+	}
+
+	public void setQuantidade(int quantidade) {
+		this.quantidade = quantidade;
+	}
+
+	public String getCodigoBarras() {
+		return codigoBarras;
+	}
+
+	public void setCodigoBarras(String codigoBarras) {
+		this.codigoBarras = codigoBarras;
+	}
+
+	public List<ItemProduto> getItemProdutos() {
+		return itemProdutos;
+	}
+
+	public void setItemProdutos(List<ItemProduto> itemProdutos) {
+		this.itemProdutos = itemProdutos;
 	}
 
 }

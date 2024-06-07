@@ -9,6 +9,19 @@ public class ProdutoService {
 
 	ProdutoRepository repository = new ProdutoRepository();
 
+	public Produto salvar(Produto produto) {
+
+		return repository.salvar(produto);
+	}
+
+	public boolean excluir(int id) {
+		return repository.excluir(id);
+	}
+
+	public boolean alterar(Produto p) {
+		return repository.alterar(p);
+	}
+
 	public List<Produto> consultarTodos() {
 		return repository.consultarTodos();
 	}

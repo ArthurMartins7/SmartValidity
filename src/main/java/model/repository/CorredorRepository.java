@@ -1,6 +1,7 @@
 package model.repository;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -11,20 +12,79 @@ import model.entity.Corredor;
 public class CorredorRepository implements BaseRepository<Corredor> {
 
 	@Override
-	public Corredor salvar(Corredor novaEntidade) {
-		return null;
+	public Corredor salvar(Corredor corredor) {
+		Connection c = Banco.getConnection();
+		String q = "INSERT INTO Corredor (nome, responsavel) VALUES (?,?)";
+		
+		PreparedStatement ps = Banco.getPreparedStatementWithPk(c, q);
+		
+		try {
+			ps.setString(1, corredor.getNome());
+			ps.setString(2, corredor.getResponsavel());
+			
+			ps.execute();
+			
+			ResultSet rs = ps.getGeneratedKeys();
+			if(rs.next()) {
+				corredor.setIdCorredor(rs.getInt(1));
+			}
+		} catch (SQLException e) {
+			System.out.println("Erro ao tentar salvar um novo corredor!");
+			System.out.println("Erro: " + e);
+		} finally {
+			Banco.closePreparedStatement(ps);
+			Banco.closeConnection(c);
+		}
+		return corredor;
 	}
 
 	@Override
 	public boolean excluir(int id) {
-		// TODO Auto-generated method stub
-		return false;
+		Connection c = Banco.getConnection();
+		Statement s = Banco.getStatement(c);
+		boolean excluiu = false;
+		String q = "DELETE FROM Corredor WHERE idCorredor = " + id;
+		
+		try {
+			if(s.executeUpdate(q) == 1) {
+				excluiu = true;
+			}
+		} catch (SQLException e) {
+			System.out.println("Erro ao tentar excluir um Corredor!");
+			System.out.println("Erro: " + e);
+			
+		} finally {
+			Banco.closeStatement(s);
+			Banco.closeConnection(c);
+		}
+;
+		return excluiu;
 	}
 
 	@Override
-	public boolean alterar(Corredor entidade) {
-		// TODO Auto-generated method stub
-		return false;
+	public boolean alterar(Corredor ce) {
+		Connection c = Banco.getConnection();
+		String q = "UPDATE Corredor SET nome=?, responsavel=? "
+				+ "WHERE idCorredor =?";
+		PreparedStatement ps = Banco.getPreparedStatementWithPk(c, q);
+		boolean alterou = false;
+		
+		try {
+			ps.setString(1, ce.getNome());
+			ps.setString(2, ce.getResponsavel());
+			ps.setInt(3, ce.getIdCorredor());
+			
+			if(ps.executeUpdate() == 1) {
+				alterou = true;
+			}
+		} catch (SQLException e) {
+			System.out.println("Erro ao tentar alterar um Corredor!");
+			System.out.println("Erro: " + e);
+		} finally {
+			Banco.closePreparedStatement(ps);
+			Banco.closeConnection(c);
+		}
+		return alterou;
 	}
 
 	@Override

@@ -1,16 +1,20 @@
 package model.entity;
 
+import java.util.List;
+
 public class Categoria {
 
 	private int idCategoria;
 	private String tipo;
 	private Corredor corredor;
+	private List<Produto> produtos;
 
-	public Categoria(int idCategoria, String tipo, Corredor corredor) {
+	public Categoria(int idCategoria, String tipo, Corredor corredor, List<Produto> produtos) {
 		super();
 		this.idCategoria = idCategoria;
 		this.tipo = tipo;
 		this.corredor = corredor;
+		this.produtos = produtos;
 	}
 
 	public Categoria() {
@@ -40,6 +44,14 @@ public class Categoria {
 
 	public void setCorredor(Corredor corredor) {
 		this.corredor = corredor;
+	}
+
+	public List<Produto> getProdutos() {
+		return produtos;
+	}
+
+	public void setProdutos(List<Produto> produtos) {
+		this.produtos = produtos;
 	}
 
 }

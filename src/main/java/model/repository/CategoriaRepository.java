@@ -1,6 +1,7 @@
 package model.repository;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -12,21 +13,70 @@ import model.entity.Corredor;
 public class CategoriaRepository implements BaseRepository<Categoria> {
 
 	@Override
-	public Categoria salvar(Categoria novaEntidade) {
-		// TODO Auto-generated method stub
-		return null;
+	public Categoria salvar(Categoria novaCategoria) {
+		Connection conexao = Banco.getConnection();
+		String consulta = "INSERT INTO Categoria (tipo, idCorredor) VALUES (?, ?);";
+		PreparedStatement ps = Banco.getPreparedStatementWithPk(conexao, consulta);
+		
+		try {
+			ps.setString(1, novaCategoria.getTipo());
+			ps.setInt(2, novaCategoria.getCorredor().getIdCorredor());
+			ps.execute();
+			ResultSet resultado = ps.getGeneratedKeys();
+			if (resultado.next()) {
+				novaCategoria.setIdCategoria(resultado.getInt(1));
+			}
+		} catch (SQLException e) {
+			System.out.println("Erro ao tentar salvar uma nova categoria");
+			System.out.println("Erro: " + e);
+		}
+		return novaCategoria;
 	}
 
 	@Override
 	public boolean excluir(int id) {
-		// TODO Auto-generated method stub
-		return false;
+		Connection c = Banco.getConnection();
+		Statement s = Banco.getStatement(c);
+		String q = "DELETE FROM Categoria WHERE idCategoria = " + id +";";
+		boolean excluiu = false;
+		try {
+			if(s.executeUpdate(q) == 1) {
+				excluiu = true;
+			}
+		} catch (SQLException e) {
+			System.out.println("Erro ao tentar excluir uma Categoria");
+			System.out.println("Erro: " + e);
+		} finally {
+			Banco.closePreparedStatement(s);
+			Banco.closeConnection(c);
+		}
+		
+		return excluiu;
 	}
 
 	@Override
-	public boolean alterar(Categoria entidade) {
-		// TODO Auto-generated method stub
-		return false;
+	public boolean alterar(Categoria ce) {
+		Connection c = Banco.getConnection();
+		String q = "UPDATE Categoria SET tipo=?, idCorredor=? WHERE idCategoria=?;";
+		PreparedStatement ps = Banco.getPreparedStatementWithPk(c, q);
+		boolean alterou = false;
+		
+		try {
+			ps.setString(1, ce.getTipo());
+			ps.setInt(2, ce.getCorredor().getIdCorredor());
+			ps.setInt(3, ce.getIdCategoria());
+			
+			if(ps.executeUpdate() == 1) {
+				alterou = true;
+			}
+		} catch (SQLException e) {
+			System.out.println("Erro ao tentar alterar uma Categoria!");
+			System.out.println("Erro: " + e);
+		} finally {
+			Banco.closePreparedStatement(ps);
+			Banco.closeConnection(c);
+		}
+		return alterou;
 	}
 
 	@Override

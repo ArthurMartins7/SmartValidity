@@ -1,6 +1,7 @@
 package model.repository;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -12,21 +13,80 @@ import model.entity.Fornecedor;
 public class FornecedorRepository implements BaseRepository<Fornecedor> {
 
 	@Override
-	public Fornecedor salvar(Fornecedor novaEntidade) {
-		// TODO Auto-generated method stub
-		return null;
+	public Fornecedor salvar(Fornecedor fornecedor) {
+		Connection c = Banco.getConnection();
+		String q = "INSERT INTO Fornecedor (nome, telefone, cnpj) VALUES (?, ?, ?);";
+		PreparedStatement ps = Banco.getPreparedStatementWithPk(c, q);
+		
+		try {
+			ps.setString(1, fornecedor.getNome());
+			ps.setString(2, fornecedor.getTelefone());
+			ps.setString(3, fornecedor.getCnpj());
+			
+			ps.execute();
+			ResultSet rs = ps.getGeneratedKeys();
+			
+			if(rs.next()) {
+				fornecedor.setIdFornecedor(rs.getInt(1));
+			}
+		} catch (SQLException e) {
+			System.out.println("Erro ao tentar salvar um novo fornecedor");
+			System.out.println("Erro: " + e);
+		} finally {
+			Banco.closePreparedStatement(ps);
+			Banco.closeConnection(c);
+		}
+		return fornecedor;
 	}
 
 	@Override
 	public boolean excluir(int id) {
-		// TODO Auto-generated method stub
-		return false;
+		Connection c = Banco.getConnection();
+		Statement s = Banco.getStatement(c);
+		String q = "DELETE FROM Fornecedor WHERE idFornecedor = " + id;
+		boolean excluiu = false;
+		
+		try {
+			if(s.executeUpdate(q) == 1) {
+				excluiu = true;
+			}
+		} catch (SQLException e) {
+			System.out.println("Erro ao tentar excluir um fornecedor!");
+			System.out.println("Erro: " + e.getMessage());
+		} finally {
+			Banco.closeStatement(s);
+			Banco.closeConnection(c);
+		}
+		return excluiu;
 	}
 
 	@Override
-	public boolean alterar(Fornecedor entidade) {
-		// TODO Auto-generated method stub
-		return false;
+	public boolean alterar(Fornecedor fe) {
+		Connection c = Banco.getConnection();
+		String q = "UPDATE Fornecedor SET nome = ?, "
+		        + "telefone = ?, "
+		        + "cnpj = ? "
+		        + "WHERE idFornecedor = ?;";
+
+
+		PreparedStatement ps = Banco.getPreparedStatementWithPk(c, q);
+		boolean alterou = false;
+		
+		
+		try {
+			ps.setString(1, fe.getNome());
+			ps.setString(2, fe.getTelefone());
+			ps.setString(3, fe.getCnpj());
+			ps.setInt(4, fe.getIdFornecedor());
+			
+			if(ps.executeUpdate() == 1) {
+				alterou = true;
+			}
+		} catch (SQLException e) {
+			System.out.println("Erro ao tentar alterar um Fornecedor!");
+			System.out.println("Erro: " + e);
+		}
+		return alterou;
 	}
 
 	@Override

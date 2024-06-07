@@ -1,16 +1,21 @@
 package model.entity;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Corredor {
 
 	private int idCorredor;
 	private String nome;
 	private String responsavel;
+	private List<Categoria> categorias;
 
-	public Corredor(int idCorredor, String nome, String responsavel) {
+	public Corredor(int idCorredor, String nome, String responsavel, List<Categoria> categorias) {
 		super();
 		this.idCorredor = idCorredor;
 		this.nome = nome;
 		this.responsavel = responsavel;
+		this.categorias = categorias;
 	}
 
 	public Corredor() {
@@ -40,6 +45,14 @@ public class Corredor {
 
 	public void setResponsavel(String responsavel) {
 		this.responsavel = responsavel;
+	}
+
+	public List<Categoria> getCategorias() {
+		return categorias;
+	}
+
+	public void setCategoria(List<Categoria> categorias) {
+		this.categorias = categorias;
 	}
 
 }
