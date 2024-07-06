@@ -2,7 +2,13 @@ package service;
 
 import java.util.ArrayList;
 
+import exception.SmartValidityException;
+import filter.AuthFilter;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.ws.rs.core.Context;
+import model.entity.Colaborador;
 import model.entity.Corredor;
+import model.entity.enums.PerfilAcesso;
 import model.repository.CorredorRepository;
 
 public class CorredorService {
@@ -13,8 +19,8 @@ public class CorredorService {
 		return corredorRepository.salvar(corredor);
 	}
 
-	public boolean excluir(int id) {
-		return corredorRepository.excluir(id);
+	public boolean excluir(int id) throws SmartValidityException {
+		return this.corredorRepository.excluir(id);
 	}
 
 	public boolean alterar(Corredor c) {
