@@ -1,0 +1,120 @@
+-- Corredores
+INSERT INTO Corredor (nome, responsavel) VALUES ('Bebidas', 'Vilmar');
+INSERT INTO Corredor (nome, responsavel) VALUES ('Mercearia', 'Ruan');
+INSERT INTO Corredor (nome, responsavel) VALUES ('Limpeza', 'Emerson');
+INSERT INTO Corredor (nome, responsavel) VALUES ('Hortifruti', 'Roni');
+INSERT INTO Corredor (nome, responsavel) VALUES ('Congelados', 'Ana');
+INSERT INTO Corredor (nome, responsavel) VALUES ('Laticínios', 'Carlos');
+INSERT INTO Corredor (nome, responsavel) VALUES ('Padaria', 'Maria');
+INSERT INTO Corredor (nome, responsavel) VALUES ('Carnes', 'João');
+INSERT INTO Corredor (nome, responsavel) VALUES ('Doces', 'Luana');
+INSERT INTO Corredor (nome, responsavel) VALUES ('Pet Shop', 'Pedro');
+
+- Categorias
+INSERT INTO Categoria (tipo, idCorredor) VALUES ('Águas', 1);
+INSERT INTO Categoria (tipo, idCorredor) VALUES ('Água de coco', 1);
+INSERT INTO Categoria (tipo, idCorredor) VALUES ('Chás', 1);
+INSERT INTO Categoria (tipo, idCorredor) VALUES ('Vinhos', 1);
+INSERT INTO Categoria (tipo, idCorredor) VALUES ('Refrigerantes', 1);
+INSERT INTO Categoria (tipo, idCorredor) VALUES ('Sucos', 1);
+INSERT INTO Categoria (tipo, idCorredor) VALUES ('Cervejas', 1);
+INSERT INTO Categoria (tipo, idCorredor) VALUES ('Massas', 2);
+INSERT INTO Categoria (tipo, idCorredor) VALUES ('Massas', 2);
+INSERT INTO Categoria (tipo, idCorredor) VALUES ('Grãos, arroz e feijão', 2);
+INSERT INTO Categoria (tipo, idCorredor) VALUES ('Azeites e óleos', 2);
+INSERT INTO Categoria (tipo, idCorredor) VALUES ('Conservas', 2);
+INSERT INTO Categoria (tipo, idCorredor) VALUES ('Detergentes', 3);
+INSERT INTO Categoria (tipo, idCorredor) VALUES ('Sabões', 3);
+INSERT INTO Categoria (tipo, idCorredor) VALUES ('Desinfetantes', 3);
+INSERT INTO Categoria (tipo, idCorredor) VALUES ('Frutas', 4);
+INSERT INTO Categoria (tipo, idCorredor) VALUES ('Legumes', 4);
+INSERT INTO Categoria (tipo, idCorredor) VALUES ('Verduras', 4);
+INSERT INTO Categoria (tipo, idCorredor) VALUES ('Sorvetes', 5);
+INSERT INTO Categoria (tipo, idCorredor) VALUES ('Frios', 6);
+INSERT INTO Categoria (tipo, idCorredor) VALUES ('Queijos', 6);
+INSERT INTO Categoria (tipo, idCorredor) VALUES ('Pães', 7);
+INSERT INTO Categoria (tipo, idCorredor) VALUES ('Doces e Bolos', 7);
+INSERT INTO Categoria (tipo, idCorredor) VALUES ('Carnes Bovina', 8);
+
+-- Produtos
+INSERT INTO Produto (descricao, marca, unidade_medida, quantidade, cod_barras, idCategoria) VALUES ('Água Mineral Imperatriz Premium S/Gás 500ml', 'Imperatriz', '500ml', 52, '7896806400105', 1);
+INSERT INTO Produto (descricao, marca, unidade_medida, quantidade, cod_barras, idCategoria) VALUES ('Água Mineral Santa Rita Sem Gás 10l', 'Santa Rita', '10l', 37, '7898228200134', 1);
+INSERT INTO Produto (descricao, marca, unidade_medida, quantidade, cod_barras, idCategoria) VALUES ('Refrigerante Coca-Cola 2L', 'Coca-Cola', '2L', 100, '7894900010017', 2);
+INSERT INTO Produto (descricao, marca, unidade_medida, quantidade, cod_barras, idCategoria) VALUES ('Refrigerante Pepsi 2L', 'Pepsi', '2L', 80, '7891200010028', 2);
+INSERT INTO Produto (descricao, marca, unidade_medida, quantidade, cod_barras, idCategoria) VALUES ('Suco de Laranja Natural One 1L', 'Natural One', '1L', 50, '7898102980015', 3);
+INSERT INTO Produto (descricao, marca, unidade_medida, quantidade, cod_barras, idCategoria) VALUES ('Suco de Uva Integral Casa de Madeira 1L', 'Casa de Madeira', '1L', 60, '7894562010016', 3);
+INSERT INTO Produto (descricao, marca, unidade_medida, quantidade, cod_barras, idCategoria) VALUES ('Cerveja Skol Lata 350ml', 'Skol', '350ml', 200, '7892134100024', 4);
+INSERT INTO Produto (descricao, marca, unidade_medida, quantidade, cod_barras, idCategoria) VALUES ('Cerveja Brahma Lata 350ml', 'Brahma', '350ml', 180, '7891095100011', 4);
+INSERT INTO Produto (descricao, marca, unidade_medida, quantidade, cod_barras, idCategoria) VALUES ('Massa Conchiglioni Paganini 500g', 'Paganini', '500g', 205, '7898152990408', 5);
+INSERT INTO Produto (descricao, marca, unidade_medida, quantidade, cod_barras, idCategoria) VALUES ('Macarrão Espaguete Barilla 500g', 'Barilla', '500g', 250, '7898421610022', 5);
+INSERT INTO Produto (descricao, marca, unidade_medida, quantidade, cod_barras, idCategoria) VALUES ('Arroz Branco Tio João 5kg', 'Tio João', '5kg', 300, '7898061190025', 6);
+INSERT INTO Produto (descricao, marca, unidade_medida, quantidade, cod_barras, idCategoria) VALUES ('Feijão Carioca Camil 1kg', 'Camil', '1kg', 150, '7896482320018', 6);
+INSERT INTO Produto (descricao, marca, unidade_medida, quantidade, cod_barras, idCategoria) VALUES ('Óleo de Soja Liza 900ml', 'Liza', '900ml', 180, '7896038100019', 7);
+INSERT INTO Produto (descricao, marca, unidade_medida, quantidade, cod_barras, idCategoria) VALUES ('Azeite Extra Virgem Gallo 500ml', 'Gallo', '500ml', 120, '7891202320013', 7);
+INSERT INTO Produto (descricao, marca, unidade_medida, quantidade, cod_barras, idCategoria) VALUES ('Ervilha em Conserva Quero 200g', 'Quero', '200g', 220, '7896205010011', 8);
+INSERT INTO Produto (descricao, marca, unidade_medida, quantidade, cod_barras, idCategoria) VALUES ('Milho Verde em Conserva Bonduelle 200g', 'Bonduelle', '200g', 200, '7891520240018', 8);
+INSERT INTO Produto (descricao, marca, unidade_medida, quantidade, cod_barras, idCategoria) VALUES ('Detergente Ypê Neutro 500ml', 'Ypê', '500ml', 250, '7896310400017', 9);
+INSERT INTO Produto (descricao, marca, unidade_medida, quantidade, cod_barras, idCategoria) VALUES ('Sabão em Pó Omo Lavagem Perfeita 1,6kg', 'Omo', '1,6kg', 180, '7891150060019', 10);
+INSERT INTO Produto (descricao, marca, unidade_medida, quantidade, cod_barras, idCategoria) VALUES ('Desinfetante Pinho Sol 500ml', 'Pinho Sol', '500ml', 170, '7891234560011', 11);
+INSERT INTO Produto (descricao, marca, unidade_medida, quantidade, cod_barras, idCategoria) VALUES ('Maçã Fuji 1kg', 'Fazenda da Fruta', '1kg', 150, '7894321120017', 12);
+INSERT INTO Produto (descricao, marca, unidade_medida, quantidade, cod_barras, idCategoria) VALUES ('Banana Prata 1kg', 'Fazenda da Fruta', '1kg', 180, '7895432100015', 12);
+INSERT INTO Produto (descricao, marca, unidade_medida, quantidade, cod_barras, idCategoria) VALUES ('Cenoura 1kg', 'Fazenda da Horta', '1kg', 130, '7896543210019', 13);
+INSERT INTO Produto (descricao, marca, unidade_medida, quantidade, cod_barras, idCategoria) VALUES ('Alface Crespa Unidade', 'Horta Feliz', 'Unidade', 140, '7893216540013', 14);
+INSERT INTO Produto (descricao, marca, unidade_medida, quantidade, cod_barras, idCategoria) VALUES ('Sorvete de Chocolate Kibon 2L', 'Kibon', '2L', 100, '7891122330012', 15);
+INSERT INTO Produto (descricao, marca, unidade_medida, quantidade, cod_barras, idCategoria) VALUES ('Presunto Sadia Fatiado 200g', 'Sadia', '200g', 220, '7892211330014', 16);
+INSERT INTO Produto (descricao, marca, unidade_medida, quantidade, cod_barras, idCategoria) VALUES ('Queijo Mussarela Fatiado 200g', 'Itambé', '200g', 230, '7893311440016', 17);
+INSERT INTO Produto (descricao, marca, unidade_medida, quantidade, cod_barras, idCategoria) VALUES ('Pão Francês 1kg', 'Padaria Delícia', '1kg', 150, '7895511220018', 18);
+INSERT INTO Produto (descricao, marca, unidade_medida, quantidade, cod_barras, idCategoria) VALUES ('Bolo de Chocolate 500g', 'Confeitaria Doce Sabor', '500g', 160, '7896612330010', 19);
+INSERT INTO Produto (descricao, marca, unidade_medida, quantidade, cod_barras, idCategoria) VALUES ('Carne Bovina Alcatra 1kg', 'Fazenda Boa Carne', '1kg', 190, '7897712440012', 20);
+
+-- Itens do Produto
+INSERT INTO Item_Produto (lote, preco_compra, preco_venda, data_vencimento, data_fabricacao, data_recebimento, idProduto) VALUES ('LOTE001', 1.00, 2.00, '2023-12-31', '2023-01-01 00:00:00', '2023-01-10 00:00:00', 1);
+INSERT INTO Item_Produto (lote, preco_compra, preco_venda, data_vencimento, data_fabricacao, data_recebimento, idProduto) VALUES ('LOTE002', 5.00, 7.00, '2024-06-01', '2024-01-01 00:00:00', '2024-01-20 00:00:00', 2);
+INSERT INTO Item_Produto (lote, preco_compra, preco_venda, data_vencimento, data_fabricacao, data_recebimento, idProduto) VALUES ('LOTE003', 1.50, 3.00, '2024-03-31', '2024-01-05 00:00:00', '2024-01-15 00:00:00', 3);
+INSERT INTO Item_Produto (lote, preco_compra, preco_venda, data_vencimento, data_fabricacao, data_recebimento, idProduto) VALUES ('LOTE004', 2.00, 4.00, '2024-05-31', '2024-01-10 00:00:00', '2024-01-25 00:00:00', 4);
+INSERT INTO Item_Produto (lote, preco_compra, preco_venda, data_vencimento, data_fabricacao, data_recebimento, idProduto) VALUES ('LOTE005', 1.80, 3.60, '2024-04-30', '2024-01-15 00:00:00', '2024-01-30 00:00:00', 5);
+INSERT INTO Item_Produto (lote, preco_compra, preco_venda, data_vencimento, data_fabricacao, data_recebimento, idProduto) VALUES ('LOTE006', 3.00, 6.00, '2024-07-31', '2024-01-20 00:00:00', '2024-02-05 00:00:00', 6);
+INSERT INTO Item_Produto (lote, preco_compra, preco_venda, data_vencimento, data_fabricacao, data_recebimento, idProduto) VALUES ('LOTE007', 2.50, 5.00, '2024-02-29', '2024-01-25 00:00:00', '2024-02-10 00:00:00', 7);
+INSERT INTO Item_Produto (lote, preco_compra, preco_venda, data_vencimento, data_fabricacao, data_recebimento, idProduto) VALUES ('LOTE008', 3.50, 7.00, '2024-01-31', '2024-01-30 00:00:00', '2024-02-15 00:00:00', 8);
+INSERT INTO Item_Produto (lote, preco_compra, preco_venda, data_vencimento, data_fabricacao, data_recebimento, idProduto) VALUES ('LOTE009', 4.00, 8.00, '2024-05-31', '2024-02-01 00:00:00', '2024-02-20 00:00:00', 9);
+INSERT INTO Item_Produto (lote, preco_compra, preco_venda, data_vencimento, data_fabricacao, data_recebimento, idProduto) VALUES ('LOTE010', 1.20, 2.40, '2024-03-31', '2024-02-05 00:00:00', '2024-02-25 00:00:00', 10);
+
+-- Fornecedores
+INSERT INTO Fornecedor (nome, telefone, cnpj) VALUES ('Fazenda Boa Carne', '1234567890', '00.000.000/0001-91');
+INSERT INTO Fornecedor (nome, telefone, cnpj) VALUES ('Confeitaria Doce Sabor', '0987654321', '00.000.000/0001-92');
+INSERT INTO Fornecedor (nome, telefone, cnpj) VALUES ('Padaria Delícia', '1122334455', '00.000.000/0001-93');
+INSERT INTO Fornecedor (nome, telefone, cnpj) VALUES ('Horta Feliz', '5566778899', '00.000.000/0001-94');
+INSERT INTO Fornecedor (nome, telefone, cnpj) VALUES ('Fazenda da Horta', '9988776655', '00.000.000/0001-95');
+INSERT INTO Fornecedor (nome, telefone, cnpj) VALUES ('Fazenda da Fruta', '4433221100', '00.000.000/0001-96');
+INSERT INTO Fornecedor (nome, telefone, cnpj) VALUES ('Pinho Sol', '6677889900', '00.000.000/0001-97');
+INSERT INTO Fornecedor (nome, telefone, cnpj) VALUES ('Omo', '5544332211', '00.000.000/0001-98');
+INSERT INTO Fornecedor (nome, telefone, cnpj) VALUES ('Ypê', '3322114455', '00.000.000/0001-99');
+INSERT INTO Fornecedor (nome, telefone, cnpj) VALUES ('Bonduelle', '7788990011', '00.000.000/0001-00');
+INSERT INTO Fornecedor (nome, telefone, cnpj) VALUES ('Nestlé', '2233445566', '00.000.000/0001-01');
+INSERT INTO Fornecedor (nome, telefone, cnpj) VALUES ('Lacta', '3344556677', '00.000.000/0001-02');
+INSERT INTO Fornecedor (nome, telefone, cnpj) VALUES ('Kibon', '4455667788', '00.000.000/0001-03');
+INSERT INTO Fornecedor (nome, telefone, cnpj) VALUES ('Itambé', '5566778899', '00.000.000/0001-04');
+INSERT INTO Fornecedor (nome, telefone, cnpj) VALUES ('Sadia', '6677889900', '00.000.000/0001-05');
+INSERT INTO Fornecedor (nome, telefone, cnpj) VALUES ('Fazenda da Fruta', '9988776655', '00.000.000/0001-06');
+
+-- Fornecedor_Produto
+INSERT INTO Fornecedor_Produto (idFornecedor, idProduto) VALUES (1, 1);
+INSERT INTO Fornecedor_Produto (idFornecedor, idProduto) VALUES (2, 2);
+INSERT INTO Fornecedor_Produto (idFornecedor, idProduto) VALUES (3, 3);
+INSERT INTO Fornecedor_Produto (idFornecedor, idProduto) VALUES (4, 4);
+INSERT INTO Fornecedor_Produto (idFornecedor, idProduto) VALUES (5, 5);
+INSERT INTO Fornecedor_Produto (idFornecedor, idProduto) VALUES (6, 6);
+INSERT INTO Fornecedor_Produto (idFornecedor, idProduto) VALUES (7, 7);
+INSERT INTO Fornecedor_Produto (idFornecedor, idProduto) VALUES (8, 8);
+INSERT INTO Fornecedor_Produto (idFornecedor, idProduto) VALUES (9, 9);
+INSERT INTO Fornecedor_Produto (idFornecedor, idProduto) VALUES (10, 10);
+INSERT INTO Fornecedor_Produto (idFornecedor, idProduto) VALUES (11, 11);
+INSERT INTO Fornecedor_Produto (idFornecedor, idProduto) VALUES (12, 12);
+INSERT INTO Fornecedor_Produto (idFornecedor, idProduto) VALUES (13, 13);
+INSERT INTO Fornecedor_Produto (idFornecedor, idProduto) VALUES (14, 14);
+INSERT INTO Fornecedor_Produto (idFornecedor, idProduto) VALUES (15, 15);
+INSERT INTO Fornecedor_Produto (idFornecedor, idProduto) VALUES (16, 16);
+INSERT INTO Fornecedor_Produto (idFornecedor, idProduto) VALUES (17, 17);
+INSERT INTO Fornecedor_Produto (idFornecedor, idProduto) VALUES (18, 18);
+INSERT INTO Fornecedor_Produto (idFornecedor, idProduto) VALUES (19, 19);
+INSERT INTO Fornecedor_Produto (idFornecedor, idProduto) VALUES (20, 20);

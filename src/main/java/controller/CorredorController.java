@@ -1,6 +1,7 @@
 package controller;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import exception.SmartValidityException;
 import filter.AuthFilter;
@@ -17,7 +18,10 @@ import jakarta.ws.rs.core.Context;
 import jakarta.ws.rs.core.MediaType;
 import model.entity.Colaborador;
 import model.entity.Corredor;
+import model.entity.ItemProduto;
 import model.entity.enums.PerfilAcesso;
+import model.seletor.CorredorSeletor;
+import model.seletor.ItemProdutoSeletor;
 import service.ColaboradorService;
 import service.CorredorService;
 
@@ -30,6 +34,14 @@ public class CorredorController {
 
 	CorredorService corredorService = new CorredorService();
 	ColaboradorService colaboradorService = new ColaboradorService();
+
+	@POST
+	@Path("/filtro")
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public List<Corredor> consultarComFiltros(CorredorSeletor seletor) {
+		return corredorService.consultarComFiltros(seletor);
+	}
 
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
@@ -56,8 +68,6 @@ public class CorredorController {
 		return this.corredorService.salvar(corredor);
 	}
 
-	
-
 	@DELETE
 	@Path("{id}")
 	@Produces(MediaType.TEXT_PLAIN)
@@ -69,7 +79,7 @@ public class CorredorController {
 
 		validarUsuarioAutenticado();
 
-		return corredorService.excluir(id);
+		return this.corredorService.excluir(id);
 	}
 
 	@PUT
@@ -83,9 +93,37 @@ public class CorredorController {
 
 		validarUsuarioAutenticado();
 
-		return corredorService.alterar(c);
+		return this.corredorService.alterar(c);
 	}
-	
+
+	@Path("/todos")
+	@GET
+	public ArrayList<Corredor> consultarTodos() {
+
+		return this.corredorService.consultarTodos();
+
+	}
+
+	@GET
+	@Path("/{id}")
+	public Corredor consultarPorId(@PathParam("id") int id) {
+		return this.corredorService.consultarPorId(id);
+	}
+
+	@POST
+	@Path("/contar")
+	@Consumes(MediaType.APPLICATION_JSON)
+	public int contarTotalRegistros(CorredorSeletor seletor) {
+		return this.corredorService.contarTotalRegistros(seletor);
+	}
+
+	@POST
+	@Path("/total-paginas")
+	@Consumes(MediaType.APPLICATION_JSON)
+	public int contarPaginas(CorredorSeletor seletor) {
+		return this.corredorService.contarPaginas(seletor);
+	}
+
 	private void validarUsuarioAutenticado() throws SmartValidityException {
 
 		Colaborador colaboradorAutenticado = this.colaboradorService.consultarPorIdSessao(this.idSessaoNoHeader);
@@ -95,32 +133,6 @@ public class CorredorController {
 		}
 
 		if (colaboradorAutenticado.getPerfil() != PerfilAcesso.GERENCIADOR
-				&& colaboradorAutenticado.getIdSessao() != this.idSessaoNoHeader) {
-			throw new SmartValidityException("Usuário sem permissão de acesso");
-		}
-	}
-
-	@Path("/todos")
-	@GET
-	public ArrayList<Corredor> consultarTodos() {
-
-		return corredorService.consultarTodos();
-
-	}
-
-	@GET
-	@Path("/{id}")
-	public Corredor consultarPorId(@PathParam("id") int id) {
-		
-		return corredorService.consultarPorId(id);
-
-	}
-	
-	public void liberaAcessoATodosPerfis() throws SmartValidityException {
-		Colaborador colaboradorAutenticado = this.colaboradorService.consultarPorIdSessao(this.idSessaoNoHeader);
-		
-
-		if ((colaboradorAutenticado.getPerfil() != PerfilAcesso.GERENCIADOR || colaboradorAutenticado.getPerfil() != PerfilAcesso.COLABORADOR)
 				&& colaboradorAutenticado.getIdSessao() != this.idSessaoNoHeader) {
 			throw new SmartValidityException("Usuário sem permissão de acesso");
 		}

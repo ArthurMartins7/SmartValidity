@@ -3,7 +3,10 @@ package service;
 import java.util.List;
 
 import model.entity.Categoria;
+import model.entity.Corredor;
 import model.repository.CategoriaRepository;
+import model.seletor.CategoriaSeletor;
+import model.seletor.CorredorSeletor;
 
 public class CategoriaService {
 
@@ -30,4 +33,21 @@ public class CategoriaService {
 		return repository.consultarPorId(id);
 
 	}
+	
+	public Categoria consultarPorId(int id) {
+		return repository.consultarPorId(id);
+	}
+	
+	public List<Categoria> consultarComFiltros(CategoriaSeletor seletor) {
+		return repository.consultarComFiltro(seletor);
+	}
+	
+	public int contarPaginas(CategoriaSeletor seletor) {
+		return this.repository.contarPaginas(seletor);
+	}
+	
+	public int contarTotalRegistros(CategoriaSeletor seletor) {
+		return this.repository.contarTotalRegistros(seletor);
+	}
+
 }

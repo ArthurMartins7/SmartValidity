@@ -17,7 +17,10 @@ import jakarta.ws.rs.core.Context;
 import jakarta.ws.rs.core.MediaType;
 import model.entity.Categoria;
 import model.entity.Colaborador;
+import model.entity.Corredor;
 import model.entity.enums.PerfilAcesso;
+import model.seletor.CategoriaSeletor;
+import model.seletor.CorredorSeletor;
 import service.CategoriaService;
 import service.ColaboradorService;
 import service.CorredorService;
@@ -33,6 +36,14 @@ public class CategoriaController {
 	ColaboradorService colaboradorService = new ColaboradorService();
 
 	CategoriaService service = new CategoriaService();
+
+	@POST
+	@Path("/filtro")
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public List<Categoria> consultarComFiltros(CategoriaSeletor seletor) {
+		return this.service.consultarComFiltros(seletor);
+	}
 
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
@@ -72,21 +83,35 @@ public class CategoriaController {
 		}
 
 		validarUsuarioAutenticado();
-		
-		return service.alterar(c);
+
+		return this.service.alterar(c);
 	}
 
 	@GET
 	@Path("/todas")
 	public List<Categoria> consultarTodos() {
-		return service.consultarTodas();
+		return this.service.consultarTodas();
 
 	}
 
 	@GET
 	@Path("/{id}")
 	public Categoria consultarPorId(@PathParam("id") int id) {
-		return service.ConsultarPorId(id);
+		return this.service.ConsultarPorId(id);
+	}
+
+	@POST
+	@Path("/contar")
+	@Consumes(MediaType.APPLICATION_JSON)
+	public int contarTotalRegistros(CategoriaSeletor seletor) {
+		return this.service.contarTotalRegistros(seletor);
+	}
+
+	@POST
+	@Path("/total-paginas")
+	@Consumes(MediaType.APPLICATION_JSON)
+	public int contarPaginas(CategoriaSeletor seletor) {
+		return this.service.contarPaginas(seletor);
 	}
 
 	private void validarUsuarioAutenticado() throws SmartValidityException {

@@ -17,6 +17,28 @@ public class ItemProdutoSeletor extends BaseSeletor {
 	private String codigoBarras;
 	private String nomeCorredor;
 	private String nomeCategoria;
+	private int idUsuario;
+
+	public ItemProdutoSeletor(LocalDate dataInicioFabricacao, LocalDate dataFinalFabricacao,
+			LocalDate dataInicioVencimento, LocalDate dataFinalVencimento, LocalDateTime dataInicioRecebimento,
+			LocalDateTime dataFinalRecebimento, String lote, String nomeProduto, String marca, String codigoBarras,
+			String nomeCorredor, String nomeCategoria, int idUsuario) {
+		super();
+		
+		this.dataInicioFabricacao = dataInicioFabricacao;
+		this.dataFinalFabricacao = dataFinalFabricacao;
+		this.dataInicioVencimento = dataInicioVencimento;
+		this.dataFinalVencimento = dataFinalVencimento;
+		this.dataInicioRecebimento = dataInicioRecebimento;
+		this.dataFinalRecebimento = dataFinalRecebimento;
+		this.lote = lote;
+		this.nomeProduto = nomeProduto;
+		this.marca = marca;
+		this.codigoBarras = codigoBarras;
+		this.nomeCorredor = nomeCorredor;
+		this.nomeCategoria = nomeCategoria;
+		this.idUsuario = idUsuario;
+	}
 
 	public ItemProdutoSeletor() {
 
@@ -117,7 +139,13 @@ public class ItemProdutoSeletor extends BaseSeletor {
 	public void setNomeCategoria(String nomeCategoria) {
 		this.nomeCategoria = nomeCategoria;
 	}
-	
-	
+
+	public int getIdUsuario() {
+		return idUsuario;
+	}
+
+	public void setIdUsuario(int idUsuario) {
+		this.idUsuario = idUsuario;
+	}
 
 }
