@@ -210,7 +210,8 @@ public class CategoriaRepository implements BaseRepository<Categoria> {
 
 		int totalRegistros = 0;
 		ResultSet resultado = null;
-		String query = " select COUNT(categoria.idCategoria) from categoria ";
+		String query = " select COUNT(categoria.idCategoria) from categoria "
+				+ " inner join corredor on corredor.IdCorredor = categoria.idCorredor ";
 
 		query = incluirFiltros(seletor, query);
 
