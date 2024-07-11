@@ -15,9 +15,12 @@ import jakarta.ws.rs.PathParam;
 import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.core.Context;
 import jakarta.ws.rs.core.MediaType;
+import model.entity.Categoria;
 import model.entity.Colaborador;
 import model.entity.Produto;
 import model.entity.enums.PerfilAcesso;
+import model.seletor.CategoriaSeletor;
+import model.seletor.ProdutoSeletor;
 import service.ColaboradorService;
 import service.CorredorService;
 import service.ProdutoService;
@@ -33,6 +36,14 @@ public class ProdutoController {
 	ColaboradorService colaboradorService = new ColaboradorService();
 
 	ProdutoService service = new ProdutoService();
+	
+	@POST
+	@Path("/filtro")
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public List<Produto> consultarComFiltros(ProdutoSeletor seletor) {
+		return this.service.consultarComFiltros(seletor);
+	}
 
 	@POST
 	@Produces(MediaType.APPLICATION_JSON)
@@ -86,6 +97,20 @@ public class ProdutoController {
 	@Path("{id}")
 	public Produto consultarPorId(@PathParam("id") int id) {
 		return service.consultarPorId(id);
+	}
+	
+	@POST
+	@Path("/contar")
+	@Consumes(MediaType.APPLICATION_JSON)
+	public int contarTotalRegistros(ProdutoSeletor seletor) {
+		return this.service.contarTotalRegistros(seletor);
+	}
+
+	@POST
+	@Path("/total-paginas")
+	@Consumes(MediaType.APPLICATION_JSON)
+	public int contarPaginas(ProdutoSeletor seletor) {
+		return this.service.contarPaginas(seletor);
 	}
 
 	private void validarUsuarioAutenticado() throws SmartValidityException {

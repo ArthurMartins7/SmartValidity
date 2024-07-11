@@ -10,8 +10,12 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
+import model.entity.Categoria;
 import model.entity.Fornecedor;
 import model.entity.Produto;
+import model.seletor.CategoriaSeletor;
+import model.seletor.ItemProdutoSeletor;
+import model.seletor.ProdutoSeletor;
 
 public class ProdutoRepository implements BaseRepository<Produto>{
 
@@ -189,9 +193,155 @@ public class ProdutoRepository implements BaseRepository<Produto>{
 			Banco.closeConnection(conexao);
 		}
 		
-	
 		return produtos;
 	}
 	
+	private String incluirFiltros(ProdutoSeletor seletor, String query) {
+		boolean primeiro = true;
+		
+		if(seletor.getCodBarras() != null) {
+			if(primeiro) {
+				query += " WHERE ";
+			}else {
+				query += " AND ";
+			}
+			query += " upper(produto.cod_barras) LIKE UPPER('%" + seletor.getCodBarras() + "%')";
+		}
+		
+		if(seletor.getNomeProduto() != null) {
+			if(primeiro) {
+				query += " WHERE ";
+			}else {
+				query += " AND ";
+			}
+			query += "upper(produto.descricao) LIKE UPPER('%" + seletor.getNomeProduto() + "%')";
+			primeiro = false;
+		}
+		
+		if(seletor.getMarca() != null) {
+			if(primeiro) {
+				query += " WHERE ";
+			}else {
+				query += " AND ";
+			}
+			query += " upper(produto.marca) LIKE UPPER('%" + seletor.getMarca() + "%')";
+		}
+		
+		if(seletor.getTipoCategoria() != null) {
+			if(primeiro) {
+				query += " WHERE ";
+			}else {
+				query += " AND ";
+			}
+			query += " upper(categoria.tipo) LIKE UPPER('%" + seletor.getTipoCategoria() + "%')";
+		}
+		
+		if(seletor.getNomeCorredor() != null) {
+			if(primeiro) {
+				query += " WHERE ";
+			}else {
+				query += " AND ";
+			}
+			query += " upper(corredor.nome) LIKE UPPER('%" + seletor.getNomeCorredor() + "%')";
+		}
+		
+		if(seletor.getUnidadeMedida() != null) {
+			if(primeiro) {
+				query += " WHERE ";
+			}else {
+				query += " AND ";
+			}
+			query += " upper(produto.unidade_medida) LIKE UPPER('%" + seletor.getUnidadeMedida() + "%')";
+		}
+		
+		return query;
+	}
+	
+	public ArrayList<Produto> consultarComFiltro(ProdutoSeletor seletor) {
+		ArrayList<Produto> produtos = new ArrayList<>();
+		Connection conn = Banco.getConnection();
+		Statement stmt = Banco.getStatement(conn);
 
+		ResultSet resultado = null;
+		String q = "SELECT Produto.* " + " FROM Produto "
+				+ " INNER JOIN Categoria on categoria.idCategoria = produto.idCategoria "
+		 		+ " inner join Corredor on corredor.idCorredor = categoria.idCorredor ";
+
+		q = incluirFiltros(seletor, q);
+
+		if (seletor.temPaginacao()) {
+			q += " LIMIT " + seletor.getLimite();
+			q += " OFFSET " + seletor.getOffset();
+		}
+
+		try {
+			resultado = stmt.executeQuery(q);
+
+			while (resultado.next()) {
+				Produto p = new Produto();
+
+				p.setIdProduto(resultado.getInt("idProduto"));
+				p.setDescricao(resultado.getString("descricao"));
+				p.setMarca(resultado.getString("marca"));
+				p.setUnidadeMedida(resultado.getString("unidade_medida"));
+				p.setQuantidade(resultado.getInt("quantidade"));
+				p.setCodigoBarras(resultado.getString("cod_barras"));
+				CategoriaRepository categoriaRepository = new CategoriaRepository();
+				p.setCategoria(categoriaRepository.consultarPorId(resultado.getInt("idCategoria")));
+				produtos.add(p);
+			}
+
+		} catch (SQLException erro) {
+			System.out.println("Erro ao consultar com filtro todos os PRODUTOS");
+			System.out.println("Erro: " + erro.getMessage());
+		} finally {
+			Banco.closeResultSet(resultado);
+			Banco.closeStatement(stmt);
+			Banco.closeConnection(conn);
+		}
+		return produtos;
+	}
+	
+	public int contarTotalRegistros(ProdutoSeletor seletor) {
+		Connection conn = Banco.getConnection();
+		Statement stmt = Banco.getStatement(conn);
+		
+		int totalRegistros = 0;
+		ResultSet resultado = null;
+		String query = " select COUNT(produto.idProduto) from produto "
+					 + " inner join categoria on categoria.idCategoria = produto.idCategoria "
+					 + " inner join corredor on corredor.idCorredor = categoria.idCorredor ";
+		
+		query = incluirFiltros(seletor, query);
+		
+		try{
+			resultado = stmt.executeQuery(query);
+			if(resultado.next()){
+				totalRegistros = resultado.getInt(1);
+			}
+		} catch (SQLException erro){
+			System.out.println("Erro ao contar os produtos filtrados");
+			System.out.println("Erro: " + erro.getMessage());
+		} finally {
+			Banco.closeResultSet(resultado);
+			Banco.closeStatement(stmt);
+			Banco.closeConnection(conn);
+		}
+		return totalRegistros;
+	}
+	
+	public int contarPaginas(ProdutoSeletor seletor) {
+		int totalPaginas = 0;
+		int totalRegistros = this.contarTotalRegistros(seletor);	
+		
+		totalPaginas =  totalRegistros / seletor.getLimite();
+		int resto = totalRegistros % seletor.getLimite(); 
+		
+		if(resto > 0) {
+			totalPaginas++;
+		}
+		
+		return totalPaginas;
+	}
+	
 }

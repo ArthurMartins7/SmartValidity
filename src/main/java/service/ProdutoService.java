@@ -2,8 +2,11 @@ package service;
 
 import java.util.List;
 
+import model.entity.Categoria;
 import model.entity.Produto;
 import model.repository.ProdutoRepository;
+import model.seletor.CategoriaSeletor;
+import model.seletor.ProdutoSeletor;
 
 public class ProdutoService {
 
@@ -28,6 +31,18 @@ public class ProdutoService {
 
 	public Produto consultarPorId(int id) {
 		return repository.consultarPorId(id);
+	}
+	
+	public List<Produto> consultarComFiltros(ProdutoSeletor seletor) {
+		return repository.consultarComFiltro(seletor);
+	}
+	
+	public int contarPaginas(ProdutoSeletor seletor) {
+		return this.repository.contarPaginas(seletor);
+	}
+	
+	public int contarTotalRegistros(ProdutoSeletor seletor) {
+		return this.repository.contarTotalRegistros(seletor);
 	}
 
 }
