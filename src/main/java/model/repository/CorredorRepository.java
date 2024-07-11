@@ -147,6 +147,7 @@ public class CorredorRepository implements BaseRepository<Corredor> {
 
 		return corredores;
 	}
+	
 
 	private String incluirFiltros(CorredorSeletor seletor, String query) {
 		boolean primeiro = true;

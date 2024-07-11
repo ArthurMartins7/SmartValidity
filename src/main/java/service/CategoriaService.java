@@ -2,22 +2,30 @@ package service;
 
 import java.util.List;
 
+import exception.SmartValidityException;
 import model.entity.Categoria;
 import model.entity.Corredor;
 import model.repository.CategoriaRepository;
+import model.repository.ProdutoRepository;
 import model.seletor.CategoriaSeletor;
 import model.seletor.CorredorSeletor;
 
 public class CategoriaService {
 
 	CategoriaRepository repository = new CategoriaRepository();
+	ProdutoRepository produtoRepository = new ProdutoRepository();
 
 	public Categoria salvar(Categoria categoria) {
 
 		return repository.salvar(categoria);
 	}
 	
-	public boolean excluir(int id) {
+	public boolean excluir(int id) throws SmartValidityException {
+	    boolean possuiProdutos = produtoRepository.verificarProdutosPorCategoria(id);
+
+	    if (possuiProdutos) {
+	        throw new SmartValidityException("Não é possível excluir esta categoria pois existem produtos associados a ela."); 
+	    }
 		return repository.excluir(id);
 	}
 	

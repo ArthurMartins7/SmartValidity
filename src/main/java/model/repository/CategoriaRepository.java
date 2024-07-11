@@ -7,6 +7,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
+import exception.SmartValidityException;
 import model.entity.Categoria;
 import model.entity.Corredor;
 import model.seletor.CategoriaSeletor;
@@ -138,6 +139,38 @@ public class CategoriaRepository implements BaseRepository<Categoria> {
 
 		return categorias;
 	}
+	
+	public boolean verificarCategoriasPorCorredor(int idCorredor) throws SmartValidityException {
+	    Connection conexao = null;
+	    PreparedStatement stmt = null;
+	    ResultSet rs = null;
+	    boolean categoriasAssociadas = false;
+
+	    try {
+	        conexao = Banco.getConnection();
+	        String sql = "SELECT COUNT(*) AS total FROM Categoria WHERE idCorredor = ?";
+	        stmt = conexao.prepareStatement(sql);
+	        stmt.setInt(1, idCorredor);
+	        rs = stmt.executeQuery();
+
+	        if (rs.next()) {
+	            int totalCategorias = rs.getInt("total");
+	            categoriasAssociadas = (totalCategorias > 0);
+	        }
+
+	    } catch (SQLException e) {
+	        System.out.println("Erro ao tentar consultar categorias associadas ao corredor!");
+	        System.out.println("Erro: " + e);
+	    } finally {
+	        Banco.closeResultSet(rs);
+	        Banco.closePreparedStatement(stmt);
+	        Banco.closeConnection(conexao);
+	    }
+
+	    return categoriasAssociadas;
+	}
+
+
 	
 	private String incluirFiltros(CategoriaSeletor seletor, String query) {
 		boolean primeiro = true;

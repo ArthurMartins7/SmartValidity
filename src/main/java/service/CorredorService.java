@@ -1,5 +1,6 @@
 package service;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -11,12 +12,14 @@ import model.entity.Colaborador;
 import model.entity.Corredor;
 import model.entity.ItemProduto;
 import model.entity.enums.PerfilAcesso;
+import model.repository.CategoriaRepository;
 import model.repository.CorredorRepository;
 import model.seletor.CorredorSeletor;
 import model.seletor.ItemProdutoSeletor;
 
 public class CorredorService {
 
+	CategoriaRepository categoriaRepository = new CategoriaRepository();
 	CorredorRepository corredorRepository = new CorredorRepository();
 
 	public Corredor salvar(Corredor corredor) {
@@ -24,6 +27,16 @@ public class CorredorService {
 	}
 
 	public boolean excluir(int id) throws SmartValidityException {
+		 // Verificar se existem categorias associadas a este corredor
+	    boolean possuiCategorias = categoriaRepository.verificarCategoriasPorCorredor(id);
+
+	    if (possuiCategorias) {
+	        throw new SmartValidityException("Não é possível excluir este corredor pois existem categorias associadas a ele.");
+	        // Ou você pode retornar false se preferir:
+	        // return false;
+	    }
+
+	    // Se não houver categorias associadas, procede com a exclusão do corredor
 		return this.corredorRepository.excluir(id);
 	}
 

@@ -10,6 +10,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
+import exception.SmartValidityException;
 import model.entity.Categoria;
 import model.entity.Fornecedor;
 import model.entity.Produto;
@@ -194,6 +195,36 @@ public class ProdutoRepository implements BaseRepository<Produto>{
 		}
 		
 		return produtos;
+	}
+	
+	public boolean verificarProdutosPorCategoria(int idCategoria) throws SmartValidityException {
+	    Connection conexao = null;
+	    PreparedStatement stmt = null;
+	    ResultSet rs = null;
+	    boolean produtosAssociados = false;
+
+	    try {
+	        conexao = Banco.getConnection();
+	        String sql = "SELECT COUNT(*) AS total FROM Produto WHERE idCategoria = ?";
+	        stmt = conexao.prepareStatement(sql);
+	        stmt.setInt(1, idCategoria);
+	        rs = stmt.executeQuery();
+
+	        if (rs.next()) {
+	            int totalProdutos = rs.getInt("total");
+	            produtosAssociados = (totalProdutos > 0);
+	        }
+
+	    } catch (SQLException e) {
+	        System.out.println("Erro ao tentar consultar produtos associados a categoria!");
+	        System.out.println("Erro: " + e);
+	    } finally {
+	        Banco.closeResultSet(rs);
+	        Banco.closePreparedStatement(stmt);
+	        Banco.closeConnection(conexao);
+	    }
+
+	    return produtosAssociados;
 	}
 	
 	private String incluirFiltros(ProdutoSeletor seletor, String query) {

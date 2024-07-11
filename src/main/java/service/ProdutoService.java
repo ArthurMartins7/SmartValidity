@@ -2,8 +2,10 @@ package service;
 
 import java.util.List;
 
+import exception.SmartValidityException;
 import model.entity.Categoria;
 import model.entity.Produto;
+import model.repository.ItemProdutoRepository;
 import model.repository.ProdutoRepository;
 import model.seletor.CategoriaSeletor;
 import model.seletor.ProdutoSeletor;
@@ -11,13 +13,19 @@ import model.seletor.ProdutoSeletor;
 public class ProdutoService {
 
 	ProdutoRepository repository = new ProdutoRepository();
+	ItemProdutoRepository itemProdutoRepository = new ItemProdutoRepository();
 
 	public Produto salvar(Produto produto) {
-
+		 
 		return repository.salvar(produto);
 	}
 
-	public boolean excluir(int id) {
+	public boolean excluir(int id) throws SmartValidityException {
+		boolean possuiItemProdutos = itemProdutoRepository.verificarItemProdutosPorProduto(id);
+
+	    if (possuiItemProdutos) {
+	        throw new SmartValidityException("Não é possível excluir este produto pois existem item produtos associados a ele."); 
+	    }
 		return repository.excluir(id);
 	}
 

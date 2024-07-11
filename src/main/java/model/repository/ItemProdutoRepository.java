@@ -10,6 +10,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
+import exception.SmartValidityException;
 import model.entity.ItemProduto;
 import model.seletor.ItemProdutoSeletor;
 
@@ -203,6 +204,37 @@ public class ItemProdutoRepository implements BaseRepository<ItemProduto> {
 
 		return itensProdutos;
 	}
+	
+	public boolean verificarItemProdutosPorProduto(int idProduto) throws SmartValidityException {
+	    Connection conexao = null;
+	    PreparedStatement stmt = null;
+	    ResultSet rs = null;
+	    boolean itemProdutosAssociados = false;
+
+	    try {
+	        conexao = Banco.getConnection();
+	        String sql = "SELECT COUNT(*) AS total FROM Item_Produto WHERE idProduto = ?";
+	        stmt = conexao.prepareStatement(sql);
+	        stmt.setInt(1, idProduto);
+	        rs = stmt.executeQuery();
+
+	        if (rs.next()) {
+	            int totalItemProdutos = rs.getInt("total");
+	            itemProdutosAssociados = (totalItemProdutos > 0);
+	        }
+
+	    } catch (SQLException e) {
+	        System.out.println("Erro ao tentar consultar item produtos associados ao produto!");
+	        System.out.println("Erro: " + e);
+	    } finally {
+	        Banco.closeResultSet(rs);
+	        Banco.closePreparedStatement(stmt);
+	        Banco.closeConnection(conexao);
+	    }
+
+	    return itemProdutosAssociados;
+	}
+	
 	
 	private String incluirFiltros(ItemProdutoSeletor seletor, String query) {
 		boolean primeiro = true;
